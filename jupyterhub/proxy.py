@@ -598,7 +598,7 @@ class ConfigurableHTTPProxy(Proxy):
                 if self.command and self.command[0]:
                     process_cmd = process.cmdline()
                     if process_cmd and not any(
-                        self.command[0] in clause for clause in process_cmd
+                            self.command[0] in clause for clause in process_cmd
                     ):
                         raise ProcessLookupError
             except (psutil.AccessDenied, psutil.NoSuchProcess):
@@ -916,6 +916,9 @@ class ConfigurableHTTPProxy(Proxy):
 
     async def add_route(self, routespec, target, data):
         body = data or {}
+        split_target = target.split("/")
+        if len(split_target) > 2 and split_target[1] == 'user':
+            target = "/" + "/".join(split_target[3:])
         body['target'] = target
         body['jupyterhub'] = True
         path = self._routespec_to_chp_path(routespec)
