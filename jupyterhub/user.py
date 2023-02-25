@@ -552,7 +552,7 @@ class User:
     def proxy_spec(self):
         """The proxy routespec for my default server"""
         if self.settings.get('subdomain_host'):
-            return url_path_join(self.domain, self.base_url, '/')
+            return url_path_join(self.domain, '/')
         else:
             return url_path_join(self.base_url, '/')
 
@@ -579,7 +579,7 @@ class User:
         Full name.domain/path if using subdomains, otherwise just my /base/url
         """
         if self.settings.get('subdomain_host'):
-            return f'{self.host}{self.base_url}'
+            return f'{self.host}'
         else:
             return self.base_url
 
